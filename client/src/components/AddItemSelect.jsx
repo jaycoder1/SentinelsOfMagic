@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import { GridList, GridTile } from 'material-ui/GridList';
-import { Card, CardActions, CardMedia, CardTitle } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -57,6 +56,7 @@ class AddItemSelect extends Component {
       showSelection: true,
     };
     this.handleSelection = this.handleSelection.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   postItem(obj) {
@@ -64,7 +64,6 @@ class AddItemSelect extends Component {
     .then(() => {
       console.log('Successful POST request to /add');
       this.props.submitItem();
-      // this.props.handleClose();
     })
     .catch(err => {
       console.log('Bad POST request to /add: ', err.response.data);
@@ -89,12 +88,38 @@ class AddItemSelect extends Component {
     this.props.handleClose();
   }
 
-  savePrice (event){
-    this.setState({
-      price: event.target.value
-    })
+  savePrice(event) {
+    if (this.state.price[0] !== '$') {
+      this.setState({
+        price: `$${event.target.value}`,
+      });
+    } else {
+      this.setState({
+        price: event.target.value,
+      });
+    }
   }
-  
+
+<<<<<<< HEAD
+=======
+  handleKeyDown(event) {
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      this.handleSubmit();
+    }
+  }
+
+<<<<<<< HEAD
+>>>>>>> fixed enter handler
+=======
+  handleKeyDown(event) {
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      this.handleSubmit();
+    }
+  }
+
+>>>>>>> 7e5954cc3837a99fd90005612d02adf27fdd5da1
   render() {
     if (this.state.showSelection) {
       return (
@@ -118,10 +143,22 @@ class AddItemSelect extends Component {
     } else {
       return (
         <div style={styles.selected}>
+<<<<<<< HEAD
+          <img src={this.state.image} alt="food" />
+          <TextField
+            floatingLabelText="Item Price (optional)"
+            value={this.state.price}
+            onChange={this.savePrice.bind(this)}
+          />
+=======
           <img src={this.state.image} />
-          <TextField floatingLabelText="Item Price" value={this.state.price} onChange={this.savePrice.bind(this)}/>
+          <TextField floatingLabelText="Item Price" value={this.state.price} onChange={this.savePrice.bind(this)} onKeyDown={this.handleKeyDown}/>
+<<<<<<< HEAD
+>>>>>>> fixed enter handler
+=======
+>>>>>>> 7e5954cc3837a99fd90005612d02adf27fdd5da1
           <RaisedButton primary label="Submit" onClick={() => this.handleSubmit()} />
-      </div>
+        </div>
       );
     }
   }
